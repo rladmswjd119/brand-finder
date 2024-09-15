@@ -20,6 +20,7 @@
 </br>
 
 ## ERD
+![image](https://github.com/user-attachments/assets/0c82dde8-8bad-4508-a1ab-7dc5b6cb3f72)
 
 </br>
 
