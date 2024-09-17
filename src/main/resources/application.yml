@@ -20,6 +20,6 @@ spring:
       hibernate:
         id:
           new_generator-mappings: true
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
   jwt:
     secretkey: ${JWT_KEY}
