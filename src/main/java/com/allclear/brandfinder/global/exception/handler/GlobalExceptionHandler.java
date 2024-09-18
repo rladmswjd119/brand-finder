@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.allclear.brandfinder.global.exception.CustomException;
-import com.allclear.brandfinder.global.exception.response.ErrorResponse;
+import com.allclear.brandfinder.global.response.ErrorResponse;
 
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice

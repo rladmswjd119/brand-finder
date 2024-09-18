@@ -14,7 +14,9 @@ import com.allclear.brandfinder.global.exception.CustomException;
 import com.allclear.brandfinder.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
         checkPattern(form);
         checkDup(form);
 
+
         String encryptPassword = passwordEncoder.encode(form.getPassword());
         User user = User.builder()
                 .username(form.getUsername())
@@ -34,6 +37,11 @@ public class UserServiceImpl implements UserService {
                 .email(form.getEmail())
                 .birth(form.getBirth())
                 .build();
+
+        log.info("회원 가입 요청 : {}, {}, {}, {}", user.getUsername(),
+                                                user.getPassword(),
+                                                user.getEmail(),
+                                                user.getBirth());
 
         return userRepository.save(user);
     }
@@ -45,10 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkPasswordPattern(String password) {
+        int passwordLen = password.length();
         Pattern pattern = Pattern.compile(UserInfoPattern.PASSWORD_PATTERN.getPattern());
         Matcher matcher = pattern.matcher(password);
 
-        if(!matcher.matches()) {
+        if((passwordLen < 8 || passwordLen > 20) && !matcher.matches()) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD_FORMAT);
         }
     }
