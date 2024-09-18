@@ -12,7 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class User extends BaseEntity {
     @Column(name = "birth")
     private LocalDateTime birth;
 
-    @OneToOne
+    @ManyToOne
     private Rank rank;
 
 }
