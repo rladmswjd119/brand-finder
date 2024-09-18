@@ -1,7 +1,6 @@
 package com.allclear.brandfinder.global.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
