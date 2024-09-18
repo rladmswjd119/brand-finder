@@ -1,8 +1,6 @@
-package com.allclear.brandfinder.global.exception.response;
+package com.allclear.brandfinder.global.response;
 
 import org.springframework.http.HttpStatus;
-
-import lombok.Builder;
 
 public class ErrorResponse {
 

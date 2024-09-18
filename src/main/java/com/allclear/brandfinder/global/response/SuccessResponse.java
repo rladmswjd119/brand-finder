@@ -1,4 +1,5 @@
-package com.allclear.brandfinder.global.exception.response;
+package com.allclear.brandfinder.global.response;
+
 
 import lombok.Getter;
 
@@ -10,6 +11,7 @@ public class SuccessResponse<T> {
     public T data;
 
     public SuccessResponse() {
+
         this.success = true;
     }
 

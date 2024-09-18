@@ -1,51 +1,36 @@
-package com.allclear.brandfinder.domain.user.entity;
+package com.allclear.brandfinder.domain.user.dto;
 
 import java.time.LocalDate;
 
-import com.allclear.brandfinder.global.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "users")
-@Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity {
+@Builder
+public class JoinForm {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    @NotNull(message = "계정명을 입력해주세요.")
     private String username;
 
+    @NotNull(message = "비밀번호를 입력해주세요.")
     private String password;
 
+    @NotNull(message = "이메일을 입력해주세요.")
     private String email;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @Column(name = "birth")
     private LocalDate birth;
-
-    @ManyToOne
-    private Rank rank;
-
 }
