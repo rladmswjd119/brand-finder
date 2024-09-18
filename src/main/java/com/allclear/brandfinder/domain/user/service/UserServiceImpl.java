@@ -3,10 +3,12 @@ package com.allclear.brandfinder.domain.user.service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.allclear.brandfinder.domain.user.dto.JoinForm;
+import com.allclear.brandfinder.domain.user.dto.LoginForm;
 import com.allclear.brandfinder.domain.user.entity.User;
 import com.allclear.brandfinder.domain.user.enums.UserInfoPattern;
 import com.allclear.brandfinder.domain.user.repository.UserRepository;
@@ -44,6 +46,12 @@ public class UserServiceImpl implements UserService {
                                                 user.getBirth());
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public HttpHeaders signIn(LoginForm form) {
+
+        return null;
     }
 
     private void checkPattern(JoinForm form) {

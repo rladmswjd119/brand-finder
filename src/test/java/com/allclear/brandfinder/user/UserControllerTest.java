@@ -1,7 +1,5 @@
 package com.allclear.brandfinder.user;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +9,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.allclear.brandfinder.domain.user.dto.JoinForm;
-import com.allclear.brandfinder.domain.user.entity.User;
 import com.allclear.brandfinder.domain.user.service.UserService;
-import com.allclear.brandfinder.global.response.SuccessResponse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
