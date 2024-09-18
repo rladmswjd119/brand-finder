@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.allclear.brandfinder.domain.auth.service.AuthService;
 import com.allclear.brandfinder.domain.user.dto.JoinForm;
 import com.allclear.brandfinder.domain.user.dto.LoginForm;
 import com.allclear.brandfinder.domain.user.entity.User;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
     @Override
     public User signUp(JoinForm form) {
@@ -50,8 +52,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public HttpHeaders signIn(LoginForm form) {
+        User user = findUsername(form.getUsername());
+        if(user == null) {
+            throw new CustomException(ErrorCode.ACCOUNT_NOT_FOUND);
+        }
 
-        return null;
+        return authService.createHttpHeaders(form.getUsername());
     }
 
     private void checkPattern(JoinForm form) {
@@ -89,21 +95,22 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkDup(JoinForm form) {
-        checkDupUsername(form.getUsername());
-        checkDupEmail(form.getEmail());
-    }
+        User userByUsername = findUsername(form.getUsername());
+        if(userByUsername != null) {
+            throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
+        }
 
-    public void checkDupEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if(user != null) {
+        User userByEmail = findEmail(form.getEmail());
+        if(userByEmail != null) {
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
     }
 
-    public void checkDupUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if(user != null) {
-            throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
-        }
+    public User findEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public User findUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

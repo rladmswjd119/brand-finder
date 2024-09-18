@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.allclear.brandfinder.domain.auth.service.AuthService;
 import com.allclear.brandfinder.domain.user.dto.JoinForm;
 import com.allclear.brandfinder.domain.user.dto.LoginForm;
 import com.allclear.brandfinder.domain.user.entity.User;
@@ -26,6 +27,9 @@ public class UserServiceTest {
 
     @Mock
     public PasswordEncoder passwordEncoder;
+
+    @Mock
+    private AuthService authService;
 
     @InjectMocks
     public UserServiceImpl userService;
