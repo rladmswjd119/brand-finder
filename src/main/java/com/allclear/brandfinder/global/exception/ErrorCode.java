@@ -16,7 +16,11 @@ public enum ErrorCode {
     DUPLICATE_USERNAME(HttpStatus.CONFLICT, "이미 사용중인 계정명 입니다."),
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 가입된 이메일 입니다."),
     ACCOUNT_NOT_FOUND(HttpStatus.BAD_REQUEST, "가입된 계정이 아닙니다."),
-    INCORRECT_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+    INCORRECT_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+
+    // JWT
+    DUPLICATE_REFRESH_TOKEN(HttpStatus.CONFLICT, "Refresh Token이 이미 존재합니다"),
+    AUTHENTICATION_FAILED(HttpStatus.FORBIDDEN, "재로그인이 필요합니다.");
 
 
     private final HttpStatus status;

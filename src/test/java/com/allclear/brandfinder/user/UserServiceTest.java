@@ -56,7 +56,6 @@ public class UserServiceTest {
 
     @Test
     public void signInTest(){
-
         LoginForm form = LoginForm.builder()
                 .username("username")
                 .password("password2323")
@@ -67,7 +66,6 @@ public class UserServiceTest {
         userService.signIn(form);
 
         verify(userRepository, times(1)).findByUsername(anyString());
-
     }
 
 }
