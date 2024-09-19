@@ -20,5 +20,5 @@ public class Rank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private double rate;
+    private double discountRate;
 }

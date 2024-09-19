@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class ProductLoginResponse {
-    private int price;
-    private int discountPrice;
-    private int discountRate;
+public class ProductLoginResponse implements ProductResponse {
+    private double price;
+    private double discountPrice;
+    private double discountRate;
     private String productInfo;
     private String brandInfo;
 }

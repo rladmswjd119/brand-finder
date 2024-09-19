@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class ProductNoLoginResponse {
+public class ProductNoLoginResponse implements ProductResponse {
     private String productInfo;
     private String brandInfo;
 }
