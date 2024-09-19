@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.domain.user.controller;
+package com.allclear.brandfinder.domain.auth.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
