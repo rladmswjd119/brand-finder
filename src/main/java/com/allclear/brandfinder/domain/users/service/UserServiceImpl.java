@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.domain.user.service;
+package com.allclear.brandfinder.domain.users.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,11 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.allclear.brandfinder.domain.auth.service.AuthService;
-import com.allclear.brandfinder.domain.user.dto.JoinForm;
-import com.allclear.brandfinder.domain.user.dto.LoginForm;
-import com.allclear.brandfinder.domain.user.entity.User;
-import com.allclear.brandfinder.domain.user.enums.UserInfoPattern;
-import com.allclear.brandfinder.domain.user.repository.UserRepository;
+import com.allclear.brandfinder.domain.users.dto.JoinForm;
+import com.allclear.brandfinder.domain.users.dto.LoginForm;
+import com.allclear.brandfinder.domain.users.entity.User;
+import com.allclear.brandfinder.domain.users.enums.UserInfoPattern;
+import com.allclear.brandfinder.domain.users.repository.UserRepository;
 import com.allclear.brandfinder.global.exception.CustomException;
 import com.allclear.brandfinder.global.exception.ErrorCode;
 

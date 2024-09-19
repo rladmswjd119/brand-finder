@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.user;
+package com.allclear.brandfinder.users;
 
 import java.time.LocalDate;
 
@@ -11,9 +11,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import com.allclear.brandfinder.domain.user.dto.JoinForm;
-import com.allclear.brandfinder.domain.user.dto.LoginForm;
-import com.allclear.brandfinder.domain.user.service.UserService;
+import com.allclear.brandfinder.domain.users.dto.JoinForm;
+import com.allclear.brandfinder.domain.users.dto.LoginForm;
+import com.allclear.brandfinder.domain.users.service.UserService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {

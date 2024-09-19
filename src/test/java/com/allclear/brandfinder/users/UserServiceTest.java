@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.user;
+package com.allclear.brandfinder.users;
 
 import static org.mockito.BDDMockito.*;
 
@@ -9,15 +9,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.allclear.brandfinder.domain.auth.service.AuthService;
-import com.allclear.brandfinder.domain.user.dto.JoinForm;
-import com.allclear.brandfinder.domain.user.dto.LoginForm;
-import com.allclear.brandfinder.domain.user.entity.User;
-import com.allclear.brandfinder.domain.user.repository.UserRepository;
-import com.allclear.brandfinder.domain.user.service.UserServiceImpl;
+import com.allclear.brandfinder.domain.users.dto.JoinForm;
+import com.allclear.brandfinder.domain.users.dto.LoginForm;
+import com.allclear.brandfinder.domain.users.entity.User;
+import com.allclear.brandfinder.domain.users.repository.UserRepository;
+import com.allclear.brandfinder.domain.users.service.UserServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -35,7 +34,7 @@ public class UserServiceTest {
     public UserServiceImpl userService;
 
     @Test
-    public void signUpTest() {
+    public void signUpSuccessTest() {
         JoinForm form = JoinForm.builder()
                 .username("username")
                 .password("password1234!!")
@@ -55,7 +54,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void signInTest(){
+    public void signInSuccessTest(){
         LoginForm form = LoginForm.builder()
                 .username("username")
                 .password("password2323")

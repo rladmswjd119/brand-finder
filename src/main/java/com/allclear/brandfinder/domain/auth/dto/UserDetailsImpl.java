@@ -1,12 +1,11 @@
 package com.allclear.brandfinder.domain.auth.dto;
 
-import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.allclear.brandfinder.domain.user.entity.User;
+import com.allclear.brandfinder.domain.users.entity.User;
 
 import lombok.RequiredArgsConstructor;
 

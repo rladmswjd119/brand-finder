@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.domain.user.dto;
+package com.allclear.brandfinder.domain.users.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
