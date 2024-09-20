@@ -77,16 +77,33 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void 브랜드별_상품목록_조회_테스트() {
+    public void 브랜드별_상품목록_조회_로그인_없는_테스트() {
 
         ResponseEntity<SuccessResponse<List<ProductNoLoginResponse>>> responseEntity
-                = testRestTemplate.exchange("/api/products/" + 4, HttpMethod.GET, null,
+                = testRestTemplate.exchange("/api/products/brands/" + 4, HttpMethod.GET, null,
                 new ParameterizedTypeReference<>() {});
 
 
         List<ProductNoLoginResponse> result = responseEntity.getBody().getData();
 
-        assertThat(result.size()).isEqualTo(10);
+        assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void 브랜드별_상품목록_조회_로그인_테스트() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String token = accessTokenUtil.createAccessToken(form.getUsername());
+        httpHeaders.add("Authorization", token);
+        HttpEntity<String> entity = new HttpEntity<>(null, httpHeaders);
+
+        ResponseEntity<SuccessResponse<List<ProductNoLoginResponse>>> responseEntity
+                = testRestTemplate.exchange("/api/products/brands/" + 4, HttpMethod.GET, entity,
+                new ParameterizedTypeReference<>() {});
+
+
+        List<ProductNoLoginResponse> result = responseEntity.getBody().getData();
+
+        assertThat(result.size()).isEqualTo(2);
     }
 
 }

@@ -104,7 +104,7 @@ public class ProductServiceImpl implements ProductService{
     private double getDiscountPrice(double price, double rate) {
         double discountPrice = price;
         if(rate > 0) {
-            discountPrice *= (rate/100);
+            discountPrice -= price*(rate/100);
         }
 
         return discountPrice;

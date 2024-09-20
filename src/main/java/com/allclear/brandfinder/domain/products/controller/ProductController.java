@@ -8,7 +8,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.allclear.brandfinder.domain.auth.dto.UserDetailsImpl;
@@ -46,6 +48,28 @@ public class ProductController {
 
         log.info("no login");
         Page<ProductNoLoginResponse> productNoLoginResponsePage = productService.getProductNoLoginList(page);
+        List<ProductNoLoginResponse> productLoginResponses = productNoLoginResponsePage.getContent();
+        return SuccessResponse.withData(productLoginResponses);
+    }
+
+    @GetMapping("/brands/{brandId}")
+    public SuccessResponse<List<? extends ProductResponse>> getProductsByBrandId(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PageableDefault(sort = "score", direction = Sort.Direction.DESC)Pageable pageable,
+            @PathVariable int brandId) {
+
+        Page<Product> page = productService.getProductsByBrand(pageable, brandId);
+        if(productService.isLogin(userDetails)) {
+            log.info("login");
+
+            Page<ProductLoginResponse> productLoginResponsePage = productService.getProductWithLoginList(page, userDetails);
+            List<ProductLoginResponse> productLoginResponses = productLoginResponsePage.getContent();
+            return SuccessResponse.withData(productLoginResponses);
+        }
+
+        log.info("no login");
+        Page<ProductNoLoginResponse> productNoLoginResponsePage = productService.getProductNoLoginList(page);
+
         List<ProductNoLoginResponse> productLoginResponses = productNoLoginResponsePage.getContent();
         return SuccessResponse.withData(productLoginResponses);
     }
