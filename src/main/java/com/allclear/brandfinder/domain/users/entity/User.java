@@ -51,7 +51,7 @@ public class User extends BaseEntity {
     @Column(name = "birth")
     private LocalDate birth;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rank_id")
     private Rank rank;
 
