@@ -70,6 +70,12 @@ public class ProductServiceImpl implements ProductService{
         return productNoLoginResponses.join();
     }
 
+    @Override
+    public Page<Product> getProductsByBrand(Pageable pageable, int brandId) {
+
+        return productRepository.findAllByBrandId(pageable, brandId);
+    }
+
     private ProductNoLoginResponse getProductNoLoginResponse(Product product) {
         Brand brand = product.getBrand();
         return ProductNoLoginResponse.builder()
