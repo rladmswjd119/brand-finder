@@ -27,6 +27,8 @@ public class AuthServiceImpl implements AuthService{
         httpHeaders.set("Authorization", accessToken);
         httpHeaders.set("RefreshTokenName", username);
 
+        log.info("HttpHeaders : {}", httpHeaders);
+
         return httpHeaders;
     }
 

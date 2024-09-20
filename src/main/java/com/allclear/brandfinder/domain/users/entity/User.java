@@ -11,11 +11,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,10 +36,13 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     private String username;
 
+    @NotNull
     private String password;
 
+    @NotNull
     private String email;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -45,7 +51,8 @@ public class User extends BaseEntity {
     @Column(name = "birth")
     private LocalDate birth;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rank_id")
     private Rank rank;
 
 }

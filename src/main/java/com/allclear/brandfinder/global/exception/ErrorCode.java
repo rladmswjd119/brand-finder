@@ -21,6 +21,9 @@ public enum ErrorCode {
     // JWT
     DUPLICATE_REFRESH_TOKEN(HttpStatus.CONFLICT, "Refresh Token이 이미 존재합니다"),
     AUTHENTICATION_FAILED(HttpStatus.FORBIDDEN, "재로그인이 필요합니다."),
+    INVALID_JWT_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 JWT 토큰입니다."),
+    JWT_CLAIMS_EMPTY(HttpStatus.BAD_REQUEST, "JWT 클레임이 비어 있습니다."),
+    EXPIRED_JWT_TOKEN(HttpStatus.BAD_REQUEST, "만료된 JWT 토큰입니다."),
 
     // 브랜드
     BRAND_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 브랜드는 존재하지 않습니다."),

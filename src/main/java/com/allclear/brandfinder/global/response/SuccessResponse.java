@@ -4,7 +4,7 @@ package com.allclear.brandfinder.global.response;
 import lombok.Getter;
 
 @Getter
-public class SuccessResponse<T> {
+public class SuccessResponse<T>{
 
     public boolean success;
     public String message;

@@ -12,7 +12,9 @@ import com.allclear.brandfinder.domain.users.entity.User;
 import com.allclear.brandfinder.domain.users.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -23,6 +25,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = Optional.of(userRepository.findByUsername(username))
                 .orElseThrow(() -> new RuntimeException("가입되지 않은 계정입니다."));
+
+        log.info("{}의 등급은 {} 입니다.", user.getUsername(), user.getRank().getName());
 
         return new UserDetailsImpl(user);
     }
