@@ -56,3 +56,35 @@
 </br>
 
 ## 트러블 슈팅
+
+<details><summary>역직렬화
+</summary>
+
+*상품 목록 조회 기능 테스트 코드 작성 과정에서 `org.springframework.web.client.RestClientException` 에러가 발생했습니다. 에러 메시지를 번역해보니 JSON 데이터를 자바 객체로 역직렬화할 수 없어서 발생한 것이었습니다.  아래가 에러 발생 코드입니다.*
+
+```
+ResponseEntity<List<ProductNoLoginResponse>> responseEntity 
+                = testRestTemplate.exchange("/api/products/", HttpMethod.GET, 
+                                              null, new ParameterizedTypeReference<>() {});
+```
+
+*로그인 기능 테스트 코드를 같은 방법으로 작성할 땐 발생되지 않은 에러였기 때문에 원인이 무엇인지 찾는데 시간을 많이 할애할 수 밖에 없었습니다.*
+
+
+
+```
+ResponseEntity<String> result = testRestTemplate.exchange("/api/users/login", HttpMethod.POST, 
+                                                            entity, String.class);
+```
+
+*두 코드의 차이점은 `SuccessResponse`에 저장된 타입 뿐이었습니다. 그래서 기본 자료형일 때에도 Jackson을 이용해 역직렬화가 실행되는지 확인해보았는데, 기본 자료형일 경우에는 역직렬화가 실행되지 않는다는 것을 발견했습니다.*
+
+
+```
+ResponseEntity<SuccessResponse<List<ProductNoLoginResponse>>> responseEntity
+          = testRestTemplate.exchange("/api/products/", HttpMethod.GET, null,
+                						            new ParameterizedTypeReference<>() {});
+```
+*Jackson 라이브러리를 사용해서 역직렬화를 할 때엔 지정 객체를 정확하게 기재해야 한다는 것을 깨달았습니다. 하지만 여전히 이유는 잘 모르는 상황이었습니다. 구현을 마치고 좀 더 찾아보니 에러가 발생한 데이터의 타입이 런타임 시점에서 소거되는 List인 것이 문제였습니다. List는 제네릭 타입으로 런타임 시점에서 타입이 소거됩니다. 때문에 Jackson에게 정확한 타입 정보를 전달해야 역직렬화가 가능합니다.*
+</details>
+
