@@ -20,4 +20,6 @@ public interface ProductService {
 
     Page<ProductNoLoginResponse> getProductNoLoginList(Page<Product> products);
 
+    Page<Product> getProductsByBrand(Pageable pageable, int brandId);
+
 }

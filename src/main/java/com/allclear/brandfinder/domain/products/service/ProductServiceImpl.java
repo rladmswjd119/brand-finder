@@ -70,6 +70,12 @@ public class ProductServiceImpl implements ProductService{
         return productNoLoginResponses.join();
     }
 
+    @Override
+    public Page<Product> getProductsByBrand(Pageable pageable, int brandId) {
+
+        return productRepository.findAllByBrandId(pageable, brandId);
+    }
+
     private ProductNoLoginResponse getProductNoLoginResponse(Product product) {
         Brand brand = product.getBrand();
         return ProductNoLoginResponse.builder()
@@ -98,7 +104,7 @@ public class ProductServiceImpl implements ProductService{
     private double getDiscountPrice(double price, double rate) {
         double discountPrice = price;
         if(rate > 0) {
-            discountPrice *= (rate/100);
+            discountPrice -= price*(rate/100);
         }
 
         return discountPrice;
