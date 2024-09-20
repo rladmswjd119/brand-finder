@@ -32,8 +32,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Page<Product> getProducts(Pageable pageable) {
+        log.info("pageable : {}, {}, {}", pageable.getPageNumber(), pageable.getSort(), pageable.getPageSize());
 
         Page<Product> pages = productRepository.findAll(pageable);
+        log.info("page content : {}", pages.getContent());
 
         return pages;
 
