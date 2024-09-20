@@ -1,15 +1,17 @@
 package com.allclear.brandfinder.domain.products.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.allclear.brandfinder.domain.auth.dto.UserDetailsImpl;
+import com.allclear.brandfinder.domain.products.dto.ProductNoLoginResponse;
 import com.allclear.brandfinder.domain.products.entity.Brand;
 import com.allclear.brandfinder.domain.products.dto.ProductLoginResponse;
 import com.allclear.brandfinder.domain.products.entity.Product;
@@ -29,8 +31,12 @@ public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
 
     @Override
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public Page<Product> getProducts(Pageable pageable) {
+
+        Page<Product> pages = productRepository.findAll(pageable);
+
+        return pages;
+
     }
 
     @Override
@@ -39,20 +45,36 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductLoginResponse> getProductWithLoginList(List<Product> products,
+    public Page<ProductLoginResponse> getProductWithLoginList(Page<Product> pages,
                                                                 UserDetailsImpl userDetails) {
         double rate = getDiscountRate(userDetails);
+        Page<CompletableFuture<ProductLoginResponse>> productLoginResponsePage
+                = pages.map(product -> CompletableFuture.supplyAsync(() -> getProductLoginResponse(product, rate)));
 
-        List<CompletableFuture<ProductLoginResponse>> listProductLoginResponse = new ArrayList<>();
-        for(Product product : products) {
-            listProductLoginResponse.add(CompletableFuture.supplyAsync(
-                                            () -> getProductLoginResponse(product, rate)));
-        }
-
-        CompletableFuture<List<ProductLoginResponse>> productLoginResponses
-                = changeProductLoginResponses(listProductLoginResponse);
+        CompletableFuture<Page<ProductLoginResponse>> productLoginResponses
+                = changeProductDto(productLoginResponsePage);
 
         return productLoginResponses.join();
+    }
+
+    @Override
+    public Page<ProductNoLoginResponse> getProductNoLoginList(Page<Product> pages) {
+        Page<CompletableFuture<ProductNoLoginResponse>> productNoLoginResponsePage
+                = pages.map(product -> CompletableFuture.supplyAsync(() -> getProductNoLoginResponse(product)));
+
+        CompletableFuture<Page<ProductNoLoginResponse>> productNoLoginResponses
+                = changeProductDto(productNoLoginResponsePage);
+
+        return productNoLoginResponses.join();
+    }
+
+    private ProductNoLoginResponse getProductNoLoginResponse(Product product) {
+        Brand brand = product.getBrand();
+        return ProductNoLoginResponse.builder()
+                .name(product.getName())
+                .productInfo(product.getInformation())
+                .brandInfo(brand.getInformation())
+                .build();
     }
 
     private ProductLoginResponse getProductLoginResponse(Product product, double rate) {
@@ -60,6 +82,7 @@ public class ProductServiceImpl implements ProductService{
         Brand brand = product.getBrand();
 
         return ProductLoginResponse.builder()
+                .name(product.getName())
                 .price(product.getPrice())
                 .discountPrice(discountPrice)
                 .discountRate(rate)
@@ -78,15 +101,21 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
-    private CompletableFuture<List<ProductLoginResponse>> changeProductLoginResponses(
-                                    List<CompletableFuture<ProductLoginResponse>> listProductLoginResponse) {
+    private <T> CompletableFuture<Page<T>> changeProductDto(
+                                    Page<CompletableFuture<T>> pages) {
 
-        CompletableFuture<?>[] completableFutureArray = listProductLoginResponse.toArray(new CompletableFuture<?>[0]);
-        return CompletableFuture.allOf(completableFutureArray)
-                .thenApplyAsync(i -> listProductLoginResponse.stream()
-                                                                .map(CompletableFuture::join)
-                                                                .collect(Collectors.toList()));
+        List<CompletableFuture<T>> list = pages.getContent();
+        CompletableFuture<?>[] completableFutureArray = list.toArray(new CompletableFuture<?>[0]);
+        CompletableFuture<List<T>> allOfFuture
+                = CompletableFuture.allOf(completableFutureArray)
+                                        .thenApplyAsync(i -> list.stream()
+                                                    .map(CompletableFuture::join)
+                                                    .collect(Collectors.toList()));
 
+        return allOfFuture.thenApply(results -> {
+                        Pageable pageable = pages.getPageable();
+                        return new PageImpl<>(results, pageable, pages.getTotalElements());
+        });
     }
 
     private double getDiscountRate(UserDetailsImpl userDetails) {
@@ -100,6 +129,5 @@ public class ProductServiceImpl implements ProductService{
 
         return rankRate;
     }
-
 
 }

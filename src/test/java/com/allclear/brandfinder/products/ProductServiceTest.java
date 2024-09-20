@@ -2,6 +2,8 @@ package com.allclear.brandfinder.products;
 
 import static org.mockito.BDDMockito.*;
 
+import org.springframework.data.domain.Pageable;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,14 +19,18 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
+    @Mock
+    private Pageable pageable;
+
     @InjectMocks
     private ProductServiceImpl productService;
 
     @Test
     public void getProductsWithLoginTest() {
-        productService.getProducts();
+        Pageable pageable = mock(Pageable.class);
+        productService.getProducts(pageable);
 
-        verify(productRepository, times(1)).findAll();
+        verify(productRepository, times(1)).findAll(pageable);
     }
 
 }
