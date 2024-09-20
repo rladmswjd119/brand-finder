@@ -74,6 +74,7 @@ public class ProductServiceImpl implements ProductService{
         Brand brand = product.getBrand();
         return ProductNoLoginResponse.builder()
                 .name(product.getName())
+                .createdAt(product.getCreatedAt())
                 .productInfo(product.getInformation())
                 .brandInfo(brand.getInformation())
                 .build();
@@ -85,6 +86,7 @@ public class ProductServiceImpl implements ProductService{
 
         return ProductLoginResponse.builder()
                 .name(product.getName())
+                .createdAt(product.getCreatedAt())
                 .price(product.getPrice())
                 .discountPrice(discountPrice)
                 .discountRate(rate)

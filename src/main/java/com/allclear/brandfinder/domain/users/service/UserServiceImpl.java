@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import com.allclear.brandfinder.domain.auth.service.AuthService;
 import com.allclear.brandfinder.domain.users.dto.JoinForm;
 import com.allclear.brandfinder.domain.users.dto.LoginForm;
+import com.allclear.brandfinder.domain.users.entity.Rank;
 import com.allclear.brandfinder.domain.users.entity.User;
+import com.allclear.brandfinder.domain.users.enums.RankEnum;
 import com.allclear.brandfinder.domain.users.enums.UserInfoPattern;
+import com.allclear.brandfinder.domain.users.repository.RankRepository;
 import com.allclear.brandfinder.domain.users.repository.UserRepository;
 import com.allclear.brandfinder.global.exception.CustomException;
 import com.allclear.brandfinder.global.exception.ErrorCode;
@@ -25,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RankRepository rankRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
 
@@ -33,13 +37,14 @@ public class UserServiceImpl implements UserService {
         checkPattern(form);
         checkDup(form);
 
-
         String encryptPassword = passwordEncoder.encode(form.getPassword());
+        Rank rank = rankRepository.findByName(RankEnum.GENERAL.getValue());
         User user = User.builder()
                 .username(form.getUsername())
                 .password(encryptPassword)
                 .email(form.getEmail())
                 .birth(form.getBirth())
+                .rank(rank)
                 .build();
 
         log.info("회원 가입 요청 : {}, {}, {}, {}", user.getUsername(),

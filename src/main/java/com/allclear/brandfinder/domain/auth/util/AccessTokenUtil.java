@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.allclear.brandfinder.domain.auth.service.UserDetailsServiceImpl;
+import com.allclear.brandfinder.global.exception.CustomException;
+import com.allclear.brandfinder.global.exception.ErrorCode;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -88,10 +90,12 @@ public class AccessTokenUtil {
                     .parseSignedClaims(token)
                     .getPayload();
 
+            log.info("claims : {}", claims);
+
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("만료된 토큰입니다.");
+            throw new CustomException(ErrorCode.EXPIRED_JWT_TOKEN);
         } catch (Exception e) {
-            throw new RuntimeException("유효하지 않은 JWT 토큰입니다.");
+            throw new CustomException(ErrorCode.INVALID_JWT_TOKEN);
         }
 
         log.info("Claims = {}", claims);
