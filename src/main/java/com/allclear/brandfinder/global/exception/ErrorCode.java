@@ -20,7 +20,13 @@ public enum ErrorCode {
 
     // JWT
     DUPLICATE_REFRESH_TOKEN(HttpStatus.CONFLICT, "Refresh Token이 이미 존재합니다"),
-    AUTHENTICATION_FAILED(HttpStatus.FORBIDDEN, "재로그인이 필요합니다.");
+    AUTHENTICATION_FAILED(HttpStatus.FORBIDDEN, "재로그인이 필요합니다."),
+
+    // 브랜드
+    BRAND_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 브랜드는 존재하지 않습니다."),
+
+    // 등급
+    RANK_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 등급은 존재하지 않습니다.");
 
 
     private final HttpStatus status;

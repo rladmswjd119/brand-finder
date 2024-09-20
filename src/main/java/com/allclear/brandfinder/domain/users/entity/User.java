@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.domain.user.entity;
+package com.allclear.brandfinder.domain.users.entity;
 
 import java.time.LocalDate;
 

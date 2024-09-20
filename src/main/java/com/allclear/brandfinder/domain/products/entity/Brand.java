@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.domain.user.entity;
+package com.allclear.brandfinder.domain.products.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,19 +6,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ranks")
-@Getter
+@Table(name = "brands")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rank {
+@Builder
+@Getter
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private double rate;
+    private String information;
 }

@@ -1,15 +1,13 @@
-package com.allclear.brandfinder.domain.user.controller;
+package com.allclear.brandfinder.domain.users.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.allclear.brandfinder.domain.user.dto.JoinForm;
-import com.allclear.brandfinder.domain.user.dto.LoginForm;
-import com.allclear.brandfinder.domain.user.entity.User;
-import com.allclear.brandfinder.domain.user.service.UserService;
+import com.allclear.brandfinder.domain.users.dto.JoinForm;
+import com.allclear.brandfinder.domain.users.dto.LoginForm;
+import com.allclear.brandfinder.domain.users.service.UserService;
 import com.allclear.brandfinder.global.exception.CustomException;
 import com.allclear.brandfinder.global.response.SuccessResponse;
 

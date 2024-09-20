@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.allclear.brandfinder.domain.auth.dto.UserDetailsImpl;
-import com.allclear.brandfinder.domain.user.entity.User;
-import com.allclear.brandfinder.domain.user.repository.UserRepository;
+import com.allclear.brandfinder.domain.users.entity.User;
+import com.allclear.brandfinder.domain.users.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

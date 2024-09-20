@@ -20,12 +20,18 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         id:
           new_generator-mappings: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
+
   jwt:
     secretkey: ${JWT_KEY}
+
+  sql:
+    init:
+      mode: always

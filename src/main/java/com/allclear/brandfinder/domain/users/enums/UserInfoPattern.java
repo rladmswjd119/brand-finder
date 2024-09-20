@@ -1,4 +1,4 @@
-package com.allclear.brandfinder.domain.user.enums;
+package com.allclear.brandfinder.domain.users.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
