@@ -99,5 +99,5 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 }
 ```
 *LAZY는 엔티티가 호출될 때가 아닌 해당 연관 관계 객체에 접근할 때 초기화가 됩니다. 접근 전까지는 영속성 컨텍스트에 프록시 객체로 저장됩니다. 문제는 이 영속성 컨텍스트가 트랜잭션과 생명주기 같다는 점에서 발생합니다. 오류가 발생한 코드에서 트랜잭션 범위는 `userRepository.findByUsername(username)` 메소드 입니다. 즉, `findByUsername()` 메소드가 종료되면 트랜잭션도 종료됩니다. 영속성 컨텍스트 또한 종료됩니다. 프록시 객체로 저장되었던 `Rank`도 함께 삭제되기 때문에 `log`에서 `Rank`의 필드를 호출할 때 오류가 발생했던 것입니다. 해결방법은 대표적으로 두 가지입니다. `FetchType`을 `EAGER`로 변경하거나 트랜잭션의 범위를 넓히는 것입니다. 저는 선택의 여지가 있다면 트랜잭션의 범위를 넓히는 것이 메모리 관리 방면에서 더 효율적이라고 생각했기 때문에 `loadUserByUsername()` 메소드에 `@Transational` 어노테이션을 정의해줌으로써 트랜잭션 범위를 넓혔습니다.*
-*LAZY는 엔티티가 호출될 때가 아닌 해당 연관 관계 객체에 접근할 때 초기화가 됩니다. 접근 전까지는 영속성 컨텍스트에 프록시 객체로 저장됩니다. 문제는 이 영속성 컨텍스트가 트랜잭션과 *
+
 </details>
