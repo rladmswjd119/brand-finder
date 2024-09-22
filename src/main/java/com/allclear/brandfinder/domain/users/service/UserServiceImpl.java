@@ -70,7 +70,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private void verifyPassword(String password, String rowPassword) {
-        if(!password.equals(securityConfig.passwordEncoder().encode(rowPassword))) {
+        PasswordEncoder passwordEncoder = securityConfig.passwordEncoder();
+        if(!passwordEncoder.matches(rowPassword, password)) {
             throw new CustomException(ErrorCode.INCORRECT_PASSWORD);
         }
     }
