@@ -16,6 +16,7 @@ import com.allclear.brandfinder.domain.auth.dto.UserDetailsImpl;
 import com.allclear.brandfinder.domain.users.dto.JoinForm;
 import com.allclear.brandfinder.domain.users.entity.User;
 import com.allclear.brandfinder.domain.users.repository.UserRepository;
+import com.allclear.brandfinder.global.exception.CustomException;
 import com.allclear.brandfinder.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = Optional.of(userRepository.findByUsername(username))
-                .orElseThrow(() -> new NullPointerException(ErrorCode.ACCOUNT_NOT_FOUND.getMessage()));
+                .orElseThrow(() -> new CustomException(ErrorCode.ACCOUNT_NOT_FOUND));
 
         log.info("{}의 등급은 {} 입니다.", user.getUsername(), user.getRank().getName());
 

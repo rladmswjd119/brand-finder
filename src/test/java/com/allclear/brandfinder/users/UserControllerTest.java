@@ -19,9 +19,6 @@ import com.allclear.brandfinder.domain.users.service.UserService;
 public class UserControllerTest {
 
     @Autowired
-    public UserService userService;
-
-    @Autowired
     public TestRestTemplate testRestTemplate;
 
     private JoinForm form;
