@@ -16,6 +16,7 @@ import com.allclear.brandfinder.domain.users.enums.RankEnum;
 import com.allclear.brandfinder.domain.users.enums.UserInfoPattern;
 import com.allclear.brandfinder.domain.users.repository.RankRepository;
 import com.allclear.brandfinder.domain.users.repository.UserRepository;
+import com.allclear.brandfinder.global.config.SecurityConfig;
 import com.allclear.brandfinder.global.exception.CustomException;
 import com.allclear.brandfinder.global.exception.ErrorCode;
 
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final RankRepository rankRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
+    private final SecurityConfig securityConfig;
 
     @Override
     public User signUp(JoinForm form) {
@@ -62,7 +64,16 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(ErrorCode.ACCOUNT_NOT_FOUND);
         }
 
+        verifyPassword(user.getPassword(), form.getPassword());
+
         return authService.createHttpHeaders(form.getUsername());
+    }
+
+    private void verifyPassword(String password, String rowPassword) {
+        PasswordEncoder passwordEncoder = securityConfig.passwordEncoder();
+        if(!passwordEncoder.matches(rowPassword, password)) {
+            throw new CustomException(ErrorCode.INCORRECT_PASSWORD);
+        }
     }
 
     private void checkPattern(JoinForm form) {
