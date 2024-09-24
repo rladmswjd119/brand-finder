@@ -45,6 +45,8 @@
 | 상품 | 상품 목록 조회 | `GET` | /api/products | O \ X | 
 | 상품 | 브랜드별 상품 목록 조회 | `GET` | /api/products | O \ X |
 
+</br>
+
 ## 기술 선택 이유
 </br>
 
