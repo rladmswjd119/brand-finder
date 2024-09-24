@@ -55,6 +55,15 @@
 
 </details>
 
+
+<details><summary>Error Handling
+</summary>
+
+*Spring에서는 `controller`에서 예외가 발생할 경우 기본적으로 `BasicErrorController`가 이를 처리합니다. 하지만 `BasicErrorController`는 클라이언트에게 `500 Internal Server Error`만 전달하기 때문에, 정확한 에러 원인을 알 수 없다는 문제가 있습니다. 이를 해결하기 위해 `controller` 단에서 발생할 수 있는 오류를 전역적으로 관리할 수 있도록 `@RestControllerAdvice`를 사용한 `GlobalExceptionHandler`를 정의해 예외 처리를 커스터마이즈했습니다.
+</br>
+또한, 정상적인 응답을 위한 `SuccessResponse`와 오류 발생 시 사용될 `ErrorResponse`를 각각 생성했습니다. `SuccessResponse`는 `controller`에서 정상 처리된 응답을 클라이언트에 전달할 때 사용되고, `ErrorResponse`는 `GlobalExceptionHandler`의 `@ExceptionHandler`로 등록된 예외가 발생했을 때 생성되어 클라이언트에 전달되도록 설정했습니다.*
+</details>
+
 </br>
 
 ## 트러블 슈팅
